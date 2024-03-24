@@ -1,6 +1,6 @@
 {
 	"name": "atlas",
-	"description": "A rectangle packer/texture atlas generator.",
+	"description": "Rectangle packer/texture atlas generator, compatible with BetterC, @nogc, and nothrow.",
 	"authors": ["Aya Partridge"],
 	"license": "BSL-1.0",
 	
