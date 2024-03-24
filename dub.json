@@ -1,0 +1,19 @@
+{
+	"name": "atlas",
+	"description": "A rectangle packer/texture atlas generator.",
+	"authors": ["Aya Partridge"],
+	"license": "BSL-1.0",
+	
+	"targetType": "staticLibrary",
+	"targetPath": "lib",
+	
+	"configurations": [
+		{
+			"name": "noBC",
+		},
+		{
+			"name": "yesBC",
+			"buildOptions": ["betterC"],
+		},
+	],
+}

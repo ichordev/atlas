@@ -1,0 +1,27 @@
+{
+	"name": "atlas-example",
+	"description": "An example.",
+	"authors": ["Aya Partridge"],
+	
+	"dependencies": {
+		"atlas": {"path": "../"},
+		"bindbc-sdl": ">=1.3.0",
+	},
+	"subConfigurations": {
+		"bindbc-sdl": "static",
+	},
+	"versions": [
+		"SDL_2014",
+	],
+	"libs": [
+		"SDL2",
+		"stdc++",
+	],
+	"libs-linux": [
+		"glx",
+		"x11",
+	],
+	
+	"targetType": "executable",
+	"targetPath": "bin",
+}
