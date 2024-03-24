@@ -5,7 +5,7 @@ import atlas.rows;
 import core.stdc.stdlib: qsort;
 
 /**
-Stores a rectangular region, with an optional `userData` field to associate it with an external resource (e.g. an image).
+A rectangular region with an optional `userData` field of type `U` to associate it with an external resource (e.g. an image).
 */
 struct Rect(U){
 	uint w, h;
@@ -20,6 +20,7 @@ struct Rect(U){
 
 enum isRect(T) = is(T TT: Rect!(U), U);
 
+///A method to pack rectangles together.
 enum Method{
 	rows, ///A basic, fast, but somewhat space-wasteful algorithm.
 }
@@ -40,14 +41,15 @@ if(isRect!R){
 	return packSorted(rects, width, height, method, padding);
 }
 
-extern(C) int sortRectHeight(R)(const(void)* aPtr, const(void)* bPtr) nothrow @nogc{
+extern(C) private int sortRectHeight(R)(const(void)* aPtr, const(void)* bPtr) nothrow @nogc{
 	auto a = cast(const(R)*)aPtr;
 	auto b = cast(const(R)*)bPtr;
 	return b.h - a.h;
 }
 
 /**
-Same as `pack`, but expects `rects` to be sorted by their height (tallest first) for some methods.
+Same as `pack`, but expects `rects` to be sorted by their height (tallest first) for the following methods:
+- rows
 */
 R[] packSorted(R)(scope return ref R[] rects, uint width, uint height, Method method, uint padding=0) nothrow @nogc pure @safe
 if(isRect!R){
