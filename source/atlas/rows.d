@@ -9,6 +9,7 @@ R[] packRows(R)(scope return ref R[] rects, uint width, uint height) nothrow @no
 		while(x+rects[i].w < width){
 			rects[i].x = x;
 			rects[i].y = y;
+			rects[i].packed = true;
 			
 			x += rects[i].w;
 			if(++i >= rects.length){
