@@ -23,14 +23,14 @@ enum isRect(T) = is(T TT: Rect!(U), U);
 ///A method to pack rectangles together.
 enum Method{
 	/**
-	A basic, fast, but wasteful algorithm.
+	A basic, fast, but wasteful algorithm. (~6–10% waste)
 	
 	It inserts the tallest unpacked rectangle and moves right until it reaches
 	the right edge, then goes down by the height of the tallest rectangle in that row.
 	*/
 	rows,
 	/**
-	A relatively simple but slow algorithm, that tends to waste very little space.
+	A relatively simple but slow algorithm, that tends to waste very little space. (~2–6% waste)
 	
 	It inserts the tallest unpacked rectangle into the topmost, leftmost
 	space large enough to accommodate it.

@@ -2,6 +2,12 @@ module atlas.pixel_scan;
 
 import core.memory: pureCalloc, pureFree;
 
+void swap(T)(ref T a, ref T b) nothrow @nogc pure @safe{
+	auto c = a;
+	a = b;
+	b = c;
+}
+
 R[] packPixelScan(R)(scope return ref R[] rects, uint width, uint height) nothrow @nogc pure @safe{
 	size_t nextFreeLen = width * height;
 	size_t[] nextFree = (
@@ -17,11 +23,18 @@ R[] packPixelScan(R)(scope return ref R[] rects, uint width, uint height) nothro
 	
 	uint y;
 	size_t i;
+	size_t unpackedI;
 	while(true){
 		uint x;
 		scanning: while(x+rects[i].w < width){
 			if(y+rects[i].h >= height){
-				return rects[0..i];
+				if(++unpackedI >= rects.length){
+					return rects[0..i];
+				}
+				swap(rects[i], rects[unpackedI]);
+				x = 0;
+				y = 0;
+				continue scanning;
 			}
 			size_t scanI = x + (y * width);
 			foreach(scanY; 0..rects[i].h){
@@ -45,12 +58,13 @@ R[] packPixelScan(R)(scope return ref R[] rects, uint width, uint height) nothro
 			rects[i].y = y;
 			rects[i].packed = true;
 			
-			if(++i >= rects.length){
-				return rects;
-			}
 			x = 0;
 			y = 0;
-			continue scanning;
+			i++;
+			unpackedI++;
+			if(i >= rects.length || unpackedI >= rects.length){
+				return rects;
+			}
 		}
 		y++;
 	}
